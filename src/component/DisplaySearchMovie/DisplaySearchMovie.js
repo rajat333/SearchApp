@@ -27,9 +27,9 @@ class DisplaySearchMovie extends Component{
              <div className="data-part" style={ { display:"table", margin:"0px 0px 0px 30px", padding:"0px 0px 0px 40px" } } >
               <h1>{ this.props.movieSearch['Title'] }</h1>
               <span style={ { display:"block", } }>{ this.props.movieSearch['Released'] }</span>
-              { this.props.movieSearch['Ratings'].map( eachObj =>(
+              { this.props.movieSearch['Ratings'].map( (eachObj,index) =>(
   
-                  <b className="rating" key={eachObj.value}>{ eachObj.Value }</b>
+                  <b className="rating" key={index }>{ eachObj.Value }</b>
               ))
               }
               <br />
@@ -40,7 +40,7 @@ class DisplaySearchMovie extends Component{
              </div>   
             </div>
              
-           ) : (<p>In DisplaySearchMovie</p>)
+           ) : ( this.props.movieSearch['Error'] ? (<div><h1 style={ { color:"red", } }>Movie not found!</h1></div>) : null )
         );
     }
 }
