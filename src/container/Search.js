@@ -18,7 +18,7 @@ class Search extends Component{
       }
     
        onInputChangeHandler(event){
-         console.log("...OninputchangeHandler....");
+        //  console.log("...OninputchangeHandler....");
           var value = event.target.value;
           this.setState({
             searchMovie: value,
@@ -26,12 +26,12 @@ class Search extends Component{
        }
     
        onSubmitHandler(){
-            console.log("..SSubmit Movie Name..",this.state.searchMovie);
+            // console.log("..SSubmit Movie Name..",this.state.searchMovie);
             let movieNameToSearch = this.state.searchMovie;
             let url="http://www.omdbapi.com/?t="+ movieNameToSearch+"&apikey=aabca0d";
             fetch(url,{ method:"GET" })
             .then(results=>{
-                console.log("....results....",results);
+                // console.log("....results....",results);
                 return results.json();    
             }).then(data=>{
                 console.log("...Search Movie Data..",data);
@@ -86,7 +86,7 @@ class Search extends Component{
 }
 
 const mapStateToProps = (state)=>{
-   console.log("....state..person...",state);
+//    console.log("....state..person...",state);
    return{ 
       movieList : state.movies,
       searchedMovie: state.searchedMovie,

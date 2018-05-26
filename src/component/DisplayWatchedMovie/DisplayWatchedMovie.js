@@ -2,15 +2,9 @@ import React , {Component } from 'react';
 import './DisplayWatchedMovie.css';
 class DisplayWatchedMovie extends Component{
 
-    constructor(props){
-        super(props);
-        this.OnDivClickHandler = this.OnDivClickHandler.bind(this);
-    }
-
-    OnDivClickHandler(index){
-        console.log(".........On Div Click Handler....",index);
-    }
-
+    // constructor(props){
+    //     super(props);
+    // }
 
     render(){
         return(

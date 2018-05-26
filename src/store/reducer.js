@@ -9,7 +9,7 @@ const initialState = {
 const reducer = (state=initialState, action) =>{
       switch(action.type){
             case actionTypes.Add_SEARCH_MOVIE :
-                   console.log(".....in reducer Addsearchmovie..",action.movieObj);
+                //    console.log(".....in reducer Addsearchmovie..",action.movieObj);
                    var found = state.movies.some(function (el) {
                     return el.Title === action.movieObj.Title;
                   });
@@ -21,7 +21,7 @@ const reducer = (state=initialState, action) =>{
                        watched: found
                    }
             case actionTypes.REMOVE_CLICK_MOVIE :
-            console.log(".....in reducer Remove Movie..",action);
+            // console.log(".....in reducer Remove Movie..",action);
             return{
                 ...state,
                 movies : state.movies.filter( (eachObj,index)=> index!== action.index ),
