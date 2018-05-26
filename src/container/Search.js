@@ -40,7 +40,12 @@ class Search extends Component{
 
        }
     
-   
+       deleteMovieHandler= (index)=>{
+
+            console.log("....in...delete..Handler....",index);
+            this.props.onRemoveMovie(index);
+       }
+
     render(){
         return(
             <div className="Search">
@@ -56,10 +61,23 @@ class Search extends Component{
         </header>
            <div className="body-content" style={ { height:"600px" } } >
            <div>
-            <DisplaySeachMovie iswatched={this.props.watched } movieSearch={this.props.searchedMovie} />
+            <DisplaySeachMovie iswatched={this.props.watched } key={ this.props.searchedMovie['Title'] } movieSearch={this.props.searchedMovie} />
             </div>
-            <DisplayWatchList  
-                  list={ this.props.movieList } />  
+            <hr />
+            <div style={ {    padding:"0 0 20px 0", } }>
+             <span style={ { float:"left",backgroundColor:"black",color:"white" } }><b>Watched</b></span> 
+             <span style={ { float:"right",backgroundColor:"black",color:"white" } }><a><b>View All</b></a></span> 
+             </div>
+             {
+                 this.props.movieList.map( (eachElement,index)=>{
+
+                    return <DisplayWatchList key={ index }
+                       click={ ()=> this.deleteMovieHandler(index) }
+                       imageLink={ eachElement.Poster } 
+                       index={ index }
+                    />
+                 })
+             }
             </div>
             <Footer />  
             </div>
@@ -80,7 +98,7 @@ const mapDispatchToProps = dispatch =>{
     return {
         // different func for performing actions
         onAddMovie:(movieObj)=>  dispatch({ type: actionTypes.Add_SEARCH_MOVIE, movieObj: movieObj }),
-        onRemoveMovie:(movieTitle)=>  dispatch({ type: actionTypes.REMOVE_CLICK_MOVIE, movieTitle:movieTitle }),
+        onRemoveMovie:(index)=>  dispatch({ type: actionTypes.REMOVE_CLICK_MOVIE, index: index, }),
     
     } 
 }
@@ -95,3 +113,5 @@ export default connect(mapStateToProps,mapDispatchToProps)(Search);
 //         name={person.name}
 //         age={ person.age} />   
 // )) }
+
+// {/* <DisplayWatchList list={ this.props.movieList } click={ this.props.onRemoveMovie } />   */}

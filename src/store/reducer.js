@@ -22,10 +22,9 @@ const reducer = (state=initialState, action) =>{
                    }
             case actionTypes.REMOVE_CLICK_MOVIE :
             console.log(".....in reducer Remove Movie..",action);
-            const newPerson1 ={ id: Math.random() }; 
             return{
                 ...state,
-                movies : state.movies.concat(newPerson1),
+                movies : state.movies.filter( (eachObj,index)=> index!== action.index ),
                 error: ''
             }       
             default: 
