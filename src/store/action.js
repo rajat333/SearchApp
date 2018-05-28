@@ -1,2 +1,0 @@
-export const Add_SEARCH_MOVIE = "Add_SEARCH_MOVIE";
-export const REMOVE_CLICK_MOVIE = "REMOVE_CLICK_MOVIE";

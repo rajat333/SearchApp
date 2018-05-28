@@ -1,12 +1,15 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import * as actionTypes from '../store/action';
+import * as actionTypes from '../../actions/movietypes';
 //For passingdata to other comp
-import DisplaySeachMovie from '../component/DisplaySearchMovie/DisplaySearchMovie';
-import DisplayWatchList from '../component/DisplayWatchedMovie/DisplayWatchedMovie';
-import Footer from '../component/Footer/Footer';
+// import DisplaySeachMovie from '../DisplaySearchMovie/DisplaySearchMovie';
+import DisplayWatchList from '../DisplayWatchedMovie/DisplayWatchedMovie';
+import Footer from '../Footer/Footer';
 
-class Search extends Component{
+import { fetchMovie } from "../../actions/movieaction";
+import './Movie.css';
+
+class Movie extends Component{
 
     constructor(){
         super();
@@ -26,22 +29,18 @@ class Search extends Component{
        }
     
        onSubmitHandler(){
-            // console.log("..SSubmit Movie Name..",this.state.searchMovie);
             let movieNameToSearch = this.state.searchMovie;
-            let url="http://www.omdbapi.com/?t="+ movieNameToSearch+"&apikey=aabca0d";
-            fetch(url,{ method:"GET" })
-            .then(results=>{
-                // console.log("....results....",results);
-                return results.json();    
-            }).then(data=>{
-                console.log("...Search Movie Data..",data);
-                this.props.onAddMovie(data);
+            this.props.fetchMovie(movieNameToSearch);
+            this.setState({ 
+                 searchedMovie: '',
             })
+       }
 
+       addToWatchList(){
+           
        }
     
        deleteMovieHandler= (index)=>{
-
             console.log("....in...delete..Handler....",index);
             this.props.onRemoveMovie(index);
        }
@@ -56,13 +55,38 @@ class Search extends Component{
                    value={this.state.searchMovie} 
                    onChange ={ this.onInputChangeHandler }
                    /> &nbsp;&nbsp;
-            <button className="btn btn-success" onClick={ this.onSubmitHandler } >Search</button>       
+            <button className="btn btn-success" disabled={ !this.state.searchMovie } onClick={ this.onSubmitHandler } >Search</button>       
           </div>
         </header>
            <div className="body-content" style={ { height:"600px" } } >
-           <div>
+           {/* Search Movie Displayed Here */}
+           {/* <div>
             <DisplaySeachMovie iswatched={this.props.watched } key={ this.props.searchedMovie['Title'] } movieSearch={this.props.searchedMovie} />
-            </div>
+            </div> */}
+
+            { this.props.searchedMovie ?  
+                 (<div key={this.props.searchedMovie['Title'] } className="DisplaySearchMovie">
+                    <p>In display Search Movie</p>
+                    <div style={ { float:"left", margin:"0px 0px 0px 100px",height: "200px",top:"0px" } }>
+                    <img src={ this.props.searchedMovie['Poster'] ? this.props.searchedMovie['Poster'] : '' } 
+                            alt="PosterImage" style={ { height:"200px" ,}} 
+                            onClick={ ()=>this.addToWatchList(this.props.searchedMovie) } 
+                            /> 
+                    </div>    
+                    <div className="data-part" style={ { display:"table", margin:"0px 0px 0px 30px", padding:"0px 0px 0px 40px" } } >
+                    <h1>{ this.props.searchedMovie['Title'] }</h1>
+                    <span style={ { display:"block", } }>{ this.props.searchedMovie['Released'] }</span>
+                
+                        {/* <b className="rating" >{ this.props.searchedMovie.Ratings[0].Value }</b>
+                        <b className="rating" >{ this.props.searchedMovie.Ratings[1].Value }</b> */}
+                    
+                    <br />
+                    <span>Rotten Tomatoes</span>&nbsp;
+                    <span>IMDB</span>&nbsp;&nbsp;
+                    { this.props.iswatched ? (<button className='btn btn-primary'>Watched</button>) : " " }
+                    </div>   
+                    </div> 
+                    ) : " "  }
             <hr />
             <div style={ {    padding:"0 0 20px 0", } }>
              <span style={ { float:"left",backgroundColor:"black",color:"white" } }><b>Watched</b></span> 
@@ -88,30 +112,20 @@ class Search extends Component{
 const mapStateToProps = (state)=>{
 //    console.log("....state..person...",state);
    return{ 
-      movieList : state.movies,
-      searchedMovie: state.searchedMovie,
-      error: state.error,
-      watched: state.watched
+      movieList : state.movie.movies,
+      searchedMovie: state.movie.searchedMovie,
+    //   error: state.error,
+      watched: state.movie.watched
     };   
 }
 const mapDispatchToProps = dispatch =>{
     return {
-        // different func for performing actions
+        // different func for performing action
+        fetchMovie : (searchedMovie)=> dispatch( fetchMovie(searchedMovie) ),
         onAddMovie:(movieObj)=>  dispatch({ type: actionTypes.Add_SEARCH_MOVIE, movieObj: movieObj }),
         onRemoveMovie:(index)=>  dispatch({ type: actionTypes.REMOVE_CLICK_MOVIE, index: index, }),
     
     } 
 }
 
-export default connect(mapStateToProps,mapDispatchToProps)(Search);
-
-
-// <AddPerson personadded={ this.props.onAddPerson } />
-// { this.props.prs.map( person=>(
-
-//  <Person key={person.id} 
-//         name={person.name}
-//         age={ person.age} />   
-// )) }
-
-// {/* <DisplayWatchList list={ this.props.movieList } click={ this.props.onRemoveMovie } />   */}
+export default connect(mapStateToProps,mapDispatchToProps)(Movie);

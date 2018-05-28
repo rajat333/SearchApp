@@ -1,5 +1,5 @@
 
-import * as actionTypes from './action';
+import * as actionTypes from '../actions/movietypes';
 const initialState = {
      movies:[],
      searchedMovie : {},
@@ -9,13 +9,13 @@ const initialState = {
 const reducer = (state=initialState, action) =>{
       switch(action.type){
             case actionTypes.Add_SEARCH_MOVIE :
-                //    console.log(".....in reducer Addsearchmovie..",action.movieObj);
+                   console.log(".....in reducer Addsearchmovie..",action.movieObj);
                    var found = state.movies.some(function (el) {
                     return el.Title === action.movieObj.Title;
                   });
                    return{
                        ...state,
-                       movies : found ? state.movies : state.movies.concat(action.movieObj),
+                       movies : [],
                        error:'',
                        searchedMovie: action.movieObj,
                        watched: found
