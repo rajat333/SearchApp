@@ -106,10 +106,10 @@ class Movie extends Component{
              </div>
              {
                  this.props.movieList.map( (eachElement,index)=>{
-                    
                     return <DisplayWatchList key={ index }
                        click={ ()=> this.deleteMovieHandler(index) }
                        index={ index }
+                       imgLink = { eachElement.Poster }
                     />
                  })
              }
@@ -121,7 +121,7 @@ class Movie extends Component{
 }
 
 const mapStateToProps = (state)=>{
-//    console.log("....state..person...",state);
+   console.log("....state..person...",state);
    return{ 
       movieList : state.movie.movies,
       searchedMovie: state.movie.searchedMovie,

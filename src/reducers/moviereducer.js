@@ -9,16 +9,13 @@ const initialState = {
 const reducer = (state=initialState, action) =>{
       switch(action.type){
             case actionTypes.Add_SEARCH_MOVIE :
-                   console.log(".....in reducer Addsearchmovie..",action.movieObj);
-                   var found = state.movies.some(function (el) {
-                    return el.Title === action.movieObj.Title;
-                  });
+                   
                    return{
                        ...state,
                        movies : [],
                        error:'',
                        searchedMovie: action.movieObj,
-                       watched: found
+                       watched: action.watched,
                    }
             case actionTypes.REMOVE_CLICK_MOVIE :
             // console.log(".....in reducer Remove Movie..",action);
@@ -35,7 +32,7 @@ const reducer = (state=initialState, action) =>{
                     movies : state.movies.concat(action.movieObj),
                     error: '',
                     searchedMovie: action.movieObj,
-                    watched: found
+                    watched: action.watched,
                 }
                              
             default: 

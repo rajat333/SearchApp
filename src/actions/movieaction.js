@@ -11,14 +11,25 @@ export const fetchMovie = (searchMovie)=>(dispatch)=> {
         return results.json();    
     }).then(data=>{
         console.log("...Search Movie Data..",data);
-        dispatch({ type: actionTypes.Add_SEARCH_MOVIE, movieObj: data })
+        var listOfStoredMovies = JSON.parse(localStorage.getItem('watchList'));
+        if(listOfStoredMovies !== null && listOfStoredMovies !== undefined ){
+            var found = listOfStoredMovies.some(function (el) {
+                return el.Title === data.Title;
+            });
+       }else{
+           found = false;
+       } 
+        var watched = false;
+        if(found)  watched= true;
+    
+        dispatch({ type: actionTypes.Add_SEARCH_MOVIE, movieObj: data , watched: watched, })
     })
 
 }
 
 export const addToWatchList = (data)=>(dispatch)=> {
         var movieObj = data;    
-        console.log("...movieObject.....addToWatchList..",movieObj,data);
+        // console.log("...movieObject.....addToWatchList..",movieObj,data);
         var list = localStorage.getItem('watchList');
         if(list ==null || list=== undefined || list === ' ' ){
             var movieData = { 
@@ -29,12 +40,14 @@ export const addToWatchList = (data)=>(dispatch)=> {
                   watched : false  
             }
            let watchList = [movieData];
-           console.log("......setting...item....");
+        //    console.log("......setting...item....");
            localStorage.setItem('watchList',JSON.stringify(watchList)); 
+           dispatch({ type: actionTypes.ADD_TO_WATCHLIST, movieObj: movieObj, watched: true });
+           
         }else{
             var listOfStoredMovies = JSON.parse(list);
 
-            console.log(".....in...else....",listOfStoredMovies,typeof(listOfStoredMovies));
+            // console.log(".....in...else....",listOfStoredMovies,typeof(listOfStoredMovies));
             var found = listOfStoredMovies.some(function (el) {
                 return el.Title === data.Title;
             });
@@ -46,7 +59,7 @@ export const addToWatchList = (data)=>(dispatch)=> {
                 listOfStoredMovies.push(data);
                 localStorage.setItem('watchList',JSON.stringify(listOfStoredMovies));
                 console.log("....pushing...to..localstorage...");
-                dispatch({ type: actionTypes.ADD_TO_WATCHLIST, movieObj: data });
+                dispatch({ type: actionTypes.ADD_TO_WATCHLIST, movieObj: data, watched: true });
             }
             // Check for Duplicacy and if found then not insert else insert
 
