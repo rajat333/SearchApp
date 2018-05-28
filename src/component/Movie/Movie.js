@@ -7,6 +7,8 @@ import DisplayWatchList from '../DisplayWatchedMovie/DisplayWatchedMovie';
 import Footer from '../Footer/Footer';
 
 import { fetchMovie } from "../../actions/movieaction";
+import { addToWatchList } from '../../actions/movieaction';
+
 import './Movie.css';
 
 class Movie extends Component{
@@ -27,6 +29,14 @@ class Movie extends Component{
             searchMovie: value,
           })
        }
+
+       componentWillMount(){
+           console.log("....in...component..will..mount....");
+       }
+
+       componentDidMount(){
+        console.log("....in...component..DID..mount....");
+    }
     
        onSubmitHandler(){
             let movieNameToSearch = this.state.searchMovie;
@@ -39,7 +49,8 @@ class Movie extends Component{
 
        addToWatchList(movieToBeAdded){
             console.log("...Addtowatchlist....",movieToBeAdded);   
-       }
+            this.props.addToList(movieToBeAdded);
+        }
     
        deleteMovieHandler= (index)=>{
             console.log("....in...delete..Handler....",index);
@@ -78,8 +89,8 @@ class Movie extends Component{
                     <h1>{ this.props.searchedMovie['Title'] }</h1>
                     <span style={ { display:"block", } }>{ this.props.searchedMovie['Released'] }</span>
                 
-                        {/* <b className="rating" >{ this.props.searchedMovie.Ratings[0].Value }</b>
-                        <b className="rating" >{ this.props.searchedMovie.Ratings[1].Value }</b> */}
+                        {/* { <b className="rating" >{ this.props.searchedMovie.Ratings.0.Value }</b> } */}
+                        {/* <b className="rating" >{ this.props.searchedMovie.Ratings[1].Value }</b> */}
                     
                     <br />
                     <span>Rotten Tomatoes</span>&nbsp;
@@ -95,10 +106,9 @@ class Movie extends Component{
              </div>
              {
                  this.props.movieList.map( (eachElement,index)=>{
-
+                    
                     return <DisplayWatchList key={ index }
                        click={ ()=> this.deleteMovieHandler(index) }
-                       imageLink={ eachElement.Poster } 
                        index={ index }
                     />
                  })
@@ -125,6 +135,7 @@ const mapDispatchToProps = dispatch =>{
         fetchMovie : (searchedMovie)=> dispatch( fetchMovie(searchedMovie) ),
         onAddMovie:(movieObj)=>  dispatch({ type: actionTypes.Add_SEARCH_MOVIE, movieObj: movieObj }),
         onRemoveMovie:(index)=>  dispatch({ type: actionTypes.REMOVE_CLICK_MOVIE, index: index, }),
+        addToList:(data)=> dispatch( addToWatchList(data) ),
     
     } 
 }

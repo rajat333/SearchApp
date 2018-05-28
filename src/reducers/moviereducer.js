@@ -26,7 +26,18 @@ const reducer = (state=initialState, action) =>{
                 ...state,
                 movies : state.movies.filter( (eachObj,index)=> index!== action.index ),
                 error: ''
-            }       
+            }     
+            
+            case actionTypes.ADD_TO_WATCHLIST:
+                console.log("......reducer..add..to..watchlist...",action.movieObj);
+                return{
+                    ...state,
+                    movies : state.movies.concat(action.movieObj),
+                    error: '',
+                    searchedMovie: action.movieObj,
+                    watched: found
+                }
+                             
             default: 
                  return state;   
         }

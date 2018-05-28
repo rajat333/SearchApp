@@ -3,7 +3,8 @@
 import * as actionTypes from './movietypes';
 
 export const fetchMovie = (searchMovie)=>(dispatch)=> {
-
+     
+    console.log(".in movieaction....fetchmovie....");
     let url = "http://www.omdbapi.com/?t="+ searchMovie+"&apikey=aabca0d";
     fetch(url,{ method:"GET" })
     .then(results=>{
@@ -15,9 +16,9 @@ export const fetchMovie = (searchMovie)=>(dispatch)=> {
 
 }
 
-export const addToWatchList = (movieObj)=>(dispatch)=> {
-
-        console.log("...movieObject...",movieObj);
+export const addToWatchList = (data)=>(dispatch)=> {
+        var movieObj = data;    
+        console.log("...movieObject.....addToWatchList..",movieObj,data);
         var list = localStorage.getItem('watchList');
         if(list ==null || list=== undefined || list === ' ' ){
             var movieData = { 
@@ -28,9 +29,25 @@ export const addToWatchList = (movieObj)=>(dispatch)=> {
                   watched : false  
             }
            let watchList = [movieData];
+           console.log("......setting...item....");
            localStorage.setItem('watchList',JSON.stringify(watchList)); 
         }else{
-            var movieObj = JSON.parse(list);
+            var listOfStoredMovies = JSON.parse(list);
+
+            console.log(".....in...else....",listOfStoredMovies,typeof(listOfStoredMovies));
+            var found = listOfStoredMovies.some(function (el) {
+                return el.Title === data.Title;
+            });
+            if(found){
+                //cannot push to localstorage
+                console.log("........Cannot..psuh..to..localstorage..");
+            }else{
+                //push to localstorage
+                listOfStoredMovies.push(data);
+                localStorage.setItem('watchList',JSON.stringify(listOfStoredMovies));
+                console.log("....pushing...to..localstorage...");
+                dispatch({ type: actionTypes.ADD_TO_WATCHLIST, movieObj: data });
+            }
             // Check for Duplicacy and if found then not insert else insert
 
         }
