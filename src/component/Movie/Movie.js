@@ -102,13 +102,14 @@ class Movie extends Component{
                     { this.props.iswatched ? (<button className='btn btn-primary'>Watched</button>) : " " }
                     </div>   
                     </div> 
-                    ) : " "  }
-            <hr />
-            <div style={ {    padding:"0 0 20px 0", } }>
+                    ) : <p style={ { color:"red" }} >No Movie is Searched</p>  }
+                    
+                     <hr />
+             <div style={ {    padding:"0 0 20px 0", } }>
              <span style={ { float:"left",backgroundColor:"black",color:"white" } }><b>Watched</b></span> 
              <span style={ { float:"right",backgroundColor:"black",color:"white" } }><a><b>View All</b></a></span> 
              </div>
-             {
+              {
                  this.props.movieList.map( (eachElement,index)=>{
                     return <DisplayWatchList key={ index }
                        click={ ()=> this.deleteMovieHandler(index) }
