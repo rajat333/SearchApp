@@ -30,14 +30,15 @@ class Movie extends Component{
     
        onSubmitHandler(){
             let movieNameToSearch = this.state.searchMovie;
-            this.props.fetchMovie(movieNameToSearch);
             this.setState({ 
-                 searchedMovie: '',
-            })
+                searchedMovie: '',
+           })
+            this.props.fetchMovie(movieNameToSearch);
+          
        }
 
-       addToWatchList(){
-           
+       addToWatchList(movieToBeAdded){
+            console.log("...Addtowatchlist....",movieToBeAdded);   
        }
     
        deleteMovieHandler= (index)=>{
@@ -69,7 +70,7 @@ class Movie extends Component{
                     <p>In display Search Movie</p>
                     <div style={ { float:"left", margin:"0px 0px 0px 100px",height: "200px",top:"0px" } }>
                     <img src={ this.props.searchedMovie['Poster'] ? this.props.searchedMovie['Poster'] : '' } 
-                            alt="PosterImage" style={ { height:"200px" ,}} 
+                            alt="PosterImage"  style={ { cursor:"pointer", height:"200px", }}
                             onClick={ ()=>this.addToWatchList(this.props.searchedMovie) } 
                             /> 
                     </div>    

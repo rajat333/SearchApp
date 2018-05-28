@@ -10,15 +10,15 @@ import { Provider } from 'react-redux'
 import  thunk  from 'redux-thunk';
 
 const logger = (store)=>{
-      return (dispatch)=>{
+      return (next)=>{
         return (action)=>{
                 console.log("...in Middleware...");
-                // const returnValue = next(action);
-                // return returnValue;
+                const returnValue = next(action);
+                return returnValue;
         }
      }
 }
-var middleware = [thunk ];
+var middleware = [thunk,logger ];
 var intialstate={};
 
 const store = createStore(reducer,

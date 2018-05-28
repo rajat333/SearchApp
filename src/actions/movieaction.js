@@ -14,3 +14,24 @@ export const fetchMovie = (searchMovie)=>(dispatch)=> {
     })
 
 }
+
+export const addToWatchList = (movieObj)=>(dispatch)=> {
+
+        console.log("...movieObject...",movieObj);
+        var list = localStorage.getItem('watchList');
+        if(list ==null || list=== undefined || list === ' ' ){
+            var movieData = { 
+                  Title: movieObj.Title,
+                  Ratings : movieObj.Ratings,
+                  Plot: movieObj.Plot,
+                  Poster: movieObj.Poster ? movieObj.Poster : " ",
+                  watched : false  
+            }
+           let watchList = [movieData];
+           localStorage.setItem('watchList',JSON.stringify(watchList)); 
+        }else{
+            var movieObj = JSON.parse(list);
+            // Check for Duplicacy and if found then not insert else insert
+
+        }
+    }
