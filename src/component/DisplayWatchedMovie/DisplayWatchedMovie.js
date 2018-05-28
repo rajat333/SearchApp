@@ -13,7 +13,6 @@ class DisplayWatchedMovie extends Component{
                     <img src={ this.props.imageLink ? this.props.imageLink :"https://mdbootstrap.com/img/Photos/Others/placeholder-avatar.jpg" } 
                          style={ { height:"200px", } } alt="Movie"
                          />
-                     />
                 </div>
                 
             );

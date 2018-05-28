@@ -34,6 +34,14 @@ const reducer = (state=initialState, action) =>{
                     searchedMovie: action.movieObj,
                     watched: action.watched,
                 }
+            case actionTypes.FETCH_LIST_OF_MOVIES:
+                 return{
+                      ...state,
+                      movies: action.movieArray,
+                      searchedMovie: '',
+                      watched: true,
+
+                 } 
                              
             default: 
                  return state;   

@@ -8,6 +8,7 @@ import Footer from '../Footer/Footer';
 
 import { fetchMovie } from "../../actions/movieaction";
 import { addToWatchList } from '../../actions/movieaction';
+import { getListOFMovie } from '../../actions/movieaction';
 
 import './Movie.css';
 
@@ -32,6 +33,8 @@ class Movie extends Component{
 
        componentWillMount(){
            console.log("....in...component..will..mount....");
+           this.props.getListOfMovies();
+           
        }
 
        componentDidMount(){
@@ -109,7 +112,7 @@ class Movie extends Component{
                     return <DisplayWatchList key={ index }
                        click={ ()=> this.deleteMovieHandler(index) }
                        index={ index }
-                       imgLink = { eachElement.Poster }
+                       imageLink = { eachElement.Poster }
                     />
                  })
              }
@@ -136,7 +139,7 @@ const mapDispatchToProps = dispatch =>{
         onAddMovie:(movieObj)=>  dispatch({ type: actionTypes.Add_SEARCH_MOVIE, movieObj: movieObj }),
         onRemoveMovie:(index)=>  dispatch({ type: actionTypes.REMOVE_CLICK_MOVIE, index: index, }),
         addToList:(data)=> dispatch( addToWatchList(data) ),
-    
+        getListOfMovies: ()=> dispatch( getListOFMovie() ),
     } 
 }
 

@@ -1,16 +1,11 @@
-// import React from 'react';
-
 import * as actionTypes from './movietypes';
-
 export const fetchMovie = (searchMovie)=>(dispatch)=> {
      
-    console.log(".in movieaction....fetchmovie....");
     let url = "http://www.omdbapi.com/?t="+ searchMovie+"&apikey=aabca0d";
     fetch(url,{ method:"GET" })
     .then(results=>{
         return results.json();    
     }).then(data=>{
-        console.log("...Search Movie Data..",data);
         var listOfStoredMovies = JSON.parse(localStorage.getItem('watchList'));
         if(listOfStoredMovies !== null && listOfStoredMovies !== undefined ){
             var found = listOfStoredMovies.some(function (el) {
@@ -21,15 +16,12 @@ export const fetchMovie = (searchMovie)=>(dispatch)=> {
        } 
         var watched = false;
         if(found)  watched= true;
-    
         dispatch({ type: actionTypes.Add_SEARCH_MOVIE, movieObj: data , watched: watched, })
     })
-
 }
 
 export const addToWatchList = (data)=>(dispatch)=> {
         var movieObj = data;    
-        // console.log("...movieObject.....addToWatchList..",movieObj,data);
         var list = localStorage.getItem('watchList');
         if(list ==null || list=== undefined || list === ' ' ){
             var movieData = { 
@@ -40,13 +32,11 @@ export const addToWatchList = (data)=>(dispatch)=> {
                   watched : false  
             }
            let watchList = [movieData];
-        //    console.log("......setting...item....");
            localStorage.setItem('watchList',JSON.stringify(watchList)); 
            dispatch({ type: actionTypes.ADD_TO_WATCHLIST, movieObj: movieObj, watched: true });
            
         }else{
             var listOfStoredMovies = JSON.parse(list);
-
             // console.log(".....in...else....",listOfStoredMovies,typeof(listOfStoredMovies));
             var found = listOfStoredMovies.some(function (el) {
                 return el.Title === data.Title;
@@ -62,6 +52,15 @@ export const addToWatchList = (data)=>(dispatch)=> {
                 dispatch({ type: actionTypes.ADD_TO_WATCHLIST, movieObj: data, watched: true });
             }
             // Check for Duplicacy and if found then not insert else insert
-
         }
     }
+
+ export const getListOFMovie = ()=>(dispatch)=>{
+        var listOfMovies = JSON.parse(localStorage.getItem('watchList'));
+        // console.log(".....listofMovies.....",listOfMovies);
+        if(listOfMovies !== null && listOfMovies !== undefined){
+            dispatch({ type: actionTypes.FETCH_LIST_OF_MOVIES, movieArray:listOfMovies, watched:true });
+        }else{
+            dispatch({ type: actionTypes.FETCH_LIST_OF_MOVIES, watched:false ,movieArray: [], });     
+        }
+ }   
