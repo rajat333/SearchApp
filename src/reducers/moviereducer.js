@@ -17,12 +17,13 @@ const reducer = (state=initialState, action) =>{
                        searchedMovie: action.movieObj,
                        watched: action.watched,
                    }
-            case actionTypes.REMOVE_CLICK_MOVIE :
+            case actionTypes.REMOVE_MOVIE_FROM_STORAGE :
             // console.log(".....in reducer Remove Movie..",action);
             return{
                 ...state,
-                movies : state.movies.filter( (eachObj,index)=> index!== action.index ),
-                error: ''
+                movies : action.movieArray,
+                error: '',
+                watched: false
             }     
             
             case actionTypes.ADD_TO_WATCHLIST:

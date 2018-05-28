@@ -9,6 +9,7 @@ import Footer from '../Footer/Footer';
 import { fetchMovie } from "../../actions/movieaction";
 import { addToWatchList } from '../../actions/movieaction';
 import { getListOFMovie } from '../../actions/movieaction';
+import { removeMovieFromWatchList } from '../../actions/movieaction';
 
 import './Movie.css';
 
@@ -137,7 +138,7 @@ const mapDispatchToProps = dispatch =>{
         // different func for performing action
         fetchMovie : (searchedMovie)=> dispatch( fetchMovie(searchedMovie) ),
         onAddMovie:(movieObj)=>  dispatch({ type: actionTypes.Add_SEARCH_MOVIE, movieObj: movieObj }),
-        onRemoveMovie:(index)=>  dispatch({ type: actionTypes.REMOVE_CLICK_MOVIE, index: index, }),
+        onRemoveMovie:(index)=>  dispatch( removeMovieFromWatchList(index) ),
         addToList:(data)=> dispatch( addToWatchList(data) ),
         getListOfMovies: ()=> dispatch( getListOFMovie() ),
     } 

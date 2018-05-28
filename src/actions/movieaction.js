@@ -64,3 +64,19 @@ export const addToWatchList = (data)=>(dispatch)=> {
             dispatch({ type: actionTypes.FETCH_LIST_OF_MOVIES, watched:false ,movieArray: [], });     
         }
  }   
+
+
+ export const removeMovieFromWatchList = (index)=>(dispatch)=>{
+    //  console.log("......removeMOvieFromWatchList....");
+    var listOfMovies = JSON.parse(localStorage.getItem('watchList'));
+    // console.log(".....listofMovies.....",listOfMovies);
+    if(listOfMovies !== null && listOfMovies !== undefined)
+    {     
+        var movieArray = listOfMovies.filter( (eachObj,indexpart)=> indexpart !== index );
+    //    console.log("..........movieArray......",movieArray);
+        localStorage.setItem('watchList', JSON.stringify(movieArray));
+        dispatch({ type: actionTypes.REMOVE_MOVIE_FROM_STORAGE, movieArray:movieArray, watched:true });
+    }else{
+        // dispatch({ type: actionTypes.FETCH_LIST_OF_MOVIES, watched:false ,movieArray: [], });     
+    }
+ }
