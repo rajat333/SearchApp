@@ -82,7 +82,6 @@ class Movie extends Component{
 
             { this.props.searchedMovie ?  
                  (<div key={this.props.searchedMovie['Title'] } className="DisplaySearchMovie">
-                    <p>In display Search Movie</p>
                     <div style={ { float:"left", margin:"0px 0px 0px 100px",height: "200px",top:"0px" } }>
                     <img src={ this.props.searchedMovie['Poster'] ? this.props.searchedMovie['Poster'] : '' } 
                             alt="PosterImage"  style={ { cursor:"pointer", height:"200px", }}
