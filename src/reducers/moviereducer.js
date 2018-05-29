@@ -12,7 +12,7 @@ const reducer = (state=initialState, action) =>{
                    
                    return{
                        ...state,
-                       movies : [],
+                       movies : localStorage.getItem('watchList') ? JSON.parse(localStorage.getItem('watchList'))  : [] ,
                        error:'',
                        searchedMovie: action.movieObj,
                        watched: action.watched,
