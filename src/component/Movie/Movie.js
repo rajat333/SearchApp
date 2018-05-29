@@ -99,7 +99,7 @@ class Movie extends Component{
                     <br />
                     <span>Rotten Tomatoes</span>&nbsp;
                     <span>IMDB</span>&nbsp;&nbsp;
-                    { this.props.iswatched ? (<button className='btn btn-primary'>Watched</button>) : " " }
+                    { this.props.watched ? (<button className='btn btn-primary'>Watched</button>) : " " }
                     </div>   
                     </div> 
                     ) : <p style={ { color:"red" }} >No Movie is Searched</p>  }
